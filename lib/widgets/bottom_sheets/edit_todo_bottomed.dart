@@ -42,7 +42,7 @@ class _EditTodoBottomedState extends State<EditTodoBottomed> {
       duration: const Duration(milliseconds: 100),
       curve: Curves.decelerate,
       child: SizedBox(
-        height: 350,
+        height: 400,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
           child: Column(
@@ -81,6 +81,7 @@ class _EditTodoBottomedState extends State<EditTodoBottomed> {
                           borderSide: BorderSide(color: Colors.purple, width: 2),
                         ),
                       ),
+                      maxLength: 15,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please fill this field';
@@ -102,6 +103,7 @@ class _EditTodoBottomedState extends State<EditTodoBottomed> {
                                 color: Colors.purple, width: 2),
                           ),
                         ),
+                      maxLength: 15,
                     ),
                     const Gap(30),
                     Container(

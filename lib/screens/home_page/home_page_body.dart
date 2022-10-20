@@ -29,6 +29,8 @@ class HomePageBody extends StatelessWidget {
           return ListView.builder(
             itemCount: state.allTodos.length,
             itemBuilder: (context, index) {
+              final TodoModel todo = state.allTodos[index];
+
               return Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 margin: const EdgeInsets.symmetric(vertical: 10),
@@ -48,16 +50,19 @@ class HomePageBody extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  state.allTodos[index].title,
-                                  style: const TextStyle(
-                                      color: Colors.purple,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 24),
+                                  todo.title,
+                                  style: TextStyle(
+                                    color: todo.isDone != null && todo.isDone == true
+                                        ? Colors.green
+                                        : Colors.purple,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 24,
+                                  ),
                                 ),
                                 const Gap(5),
                                 Text(
-                                  state.allTodos[index].description!.isNotEmpty
-                                      ? state.allTodos[index].description!
+                                  todo.description!.isNotEmpty
+                                      ? todo.description!
                                       : "no description",
                                   style: const TextStyle(fontSize: 18),
                                 )
@@ -75,10 +80,11 @@ class HomePageBody extends StatelessWidget {
                                     ),
                                     isDismissible: false,
                                     isScrollControlled: true,
-                                    builder: (builderContext) => EditTodoBottomed(
+                                    builder: (builderContext) =>
+                                        EditTodoBottomed(
                                       todoBloc:
                                           BlocProvider.of<TodoBloc>(context),
-                                      reqTodo: state.allTodos[index],
+                                      reqTodo: todo,
                                     ),
                                   ),
                                   child: const Icon(
@@ -97,16 +103,19 @@ class HomePageBody extends StatelessWidget {
                                   onTap: () {
                                     BlocProvider.of<TodoBloc>(context).add(
                                       RemoveTodo(
-                                        state.allTodos[index].id.toString(),
+                                        todo.id.toString(),
                                       ),
                                     );
                                   },
                                 ),
                                 const Gap(10),
-                                const Icon(
-                                  Icons.check_circle,
-                                  color: Colors.green,
-                                  size: 30,
+                                GestureDetector(
+                                  child: const Icon(
+                                    Icons.check_circle,
+                                    color: Colors.green,
+                                    size: 30,
+                                  ),
+                                  onTap: () => BlocProvider.of<TodoBloc>(context).add(TodoIsDone(todo.id)),
                                 )
                               ],
                             ),
@@ -114,7 +123,7 @@ class HomePageBody extends StatelessWidget {
                         ),
                         const Gap(10),
                         Text(
-                          state.allTodos[index].editedAt.toString().isNotEmpty
+                          todo.editedAt == null
                               ? 'Created at: ${state.allTodos[index].createdAt.toString()}'
                               : 'Edited at: ${state.allTodos[index].editedAt.toString()}',
                           style: const TextStyle(fontSize: 12),

@@ -70,12 +70,12 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     }
   }
 
-  void _onFinishTodo(event, emit) {
+  void _onFinishTodo(TodoIsDone event, emit) {
     List<TodoModel> currentTodos = state.allTodos;
     try {
       emit(TodosLoading(allTodos: currentTodos));
 
-      final reqIndex = currentTodos.indexWhere((e) => e.id == event.todo.id);
+      final reqIndex = currentTodos.indexWhere((e) => e.id == event.id);
       currentTodos[reqIndex].isDone = true;
       if (state.allTodos.isNotEmpty) {
         emit(TodosLoaded(todos: currentTodos));
