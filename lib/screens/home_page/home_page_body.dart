@@ -74,6 +74,7 @@ class HomePageBody extends StatelessWidget {
                                       ),
                                     ),
                                     isDismissible: false,
+                                    isScrollControlled: true,
                                     builder: (builderContext) => EditTodoBottomed(
                                       todoBloc:
                                           BlocProvider.of<TodoBloc>(context),

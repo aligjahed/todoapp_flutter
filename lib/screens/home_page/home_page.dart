@@ -27,6 +27,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             isDismissible: false,
+            isScrollControlled: true,
             builder: (buildContext) => NewTodoBottomed(
               todoBloc: BlocProvider.of<TodoBloc>(context),
             ),
